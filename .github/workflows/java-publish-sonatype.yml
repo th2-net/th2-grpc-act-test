@@ -3,7 +3,7 @@ name: Build and release Java distributions to sonatype.
 on:
   push:
     branches:
-    - master
+    - master1
     paths:
     - gradle.properties
 
