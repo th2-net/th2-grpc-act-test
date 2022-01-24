@@ -3,9 +3,10 @@ name: Build and publish Python distributions to PyPI. New gRPC generator
 on:
   push:
     branches:
-      - master
-#    paths:
-#    - package_info.json
+    - master
+    paths:
+    - package_info.json
+    - gradle.properties
 
 jobs:
   build-n-publish:
@@ -34,7 +35,7 @@ jobs:
         pip install -r requirements.txt
         python setup.py generate -s
         python setup.py sdist
-    - name: Set env vars
+    - name: Set release_name env var
       run: |
         echo "RELEASE_NAME=$(python setup.py --fullname)" >> $GITHUB_ENV
       shell: bash

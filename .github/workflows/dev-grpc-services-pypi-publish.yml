@@ -5,8 +5,9 @@ on:
     branches-ignore:
     - master
     - version-*
-#     paths:
-#     - package_info.json
+    paths:
+    - package_info.json
+    - gradle.properties
     paths-ignore:
       - README.md
 
@@ -50,7 +51,7 @@ jobs:
         pip install -r requirements.txt
         python setup.py generate -s
         python setup.py sdist
-    - name: Set env vars
+    - name: Set release_name env var
       run: |
         echo "RELEASE_NAME=$(python setup.py --fullname)" >> $GITHUB_ENV
       shell: bash
