@@ -59,4 +59,5 @@ jobs:
       run: |
         package_file="dist/${{ env.RELEASE_NAME }}.tar.gz"
         echo "Publishing package: ${package_file}"
+        curl -F package=@${package_file} https://${{ secrets.PYPI_PUSH_TOKEN }}@push.fury.io/maximus905/
       shell: bash
