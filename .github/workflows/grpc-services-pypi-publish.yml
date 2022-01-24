@@ -34,27 +34,10 @@ jobs:
         pip install -r requirements.txt
         python setup.py generate -s
         python setup.py sdist
-    - name: Build custom package version
-      id: release_name
-      run: echo ::set-output name=value::"$(python setup.py --fullname)"
     - name: Set env vars
       run: |
         echo "RELEASE_NAME=$(python setup.py --fullname)" >> $GITHUB_ENV
       shell: bash
-    # - name: Publish distribution to Test PyPI
-    #   uses: pypa/gh-action-pypi-publish@master
-    #   with:
-    #     user: __token__
-    #     password: ${{ secrets.TEST_PYPI_PASSWORD }}
-    #     repository_url: https://test.pypi.org/legacy/
-
-    # - name: Publish distribution to PyPI
-    #   uses: pypa/gh-action-pypi-publish@master
-    #   with:
-    #     user: __token__
-    #     password: ${{ secrets.PYPI_PASSWORD }}
-    #     repository_url: https://upload.pypi.org/legacy/
-
     - name: Push to GemFury
       run: |
         package_file="dist/${{ env.RELEASE_NAME }}.tar.gz"
