@@ -1,4 +1,4 @@
-name: Build and release Java distributions to sonatype.
+name: Build and release Java distributions.
 
 on:
   push:
