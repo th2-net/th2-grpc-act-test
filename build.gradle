@@ -2,8 +2,6 @@ plugins {
     id 'java'
     id 'java-library'
     id 'maven-publish'
-    id "io.github.gradle-nexus.publish-plugin" version "1.0.0"
-    // id 'signing'
     id "com.google.protobuf" version "0.8.15"
 }
 
@@ -96,71 +94,42 @@ protobuf {
     }
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
+// java {
+//     withJavadocJar()
+//     withSourcesJar()
+// }
 
-// // conditionals for publications
-// tasks.withType(PublishToMavenRepository) {
-//     onlyIf {
-//         (repository == publishing.repositories.nexusRepository &&
-//             project.hasProperty('nexus_user') &&
-//             project.hasProperty('nexus_password') &&
-//             project.hasProperty('nexus_url')) ||
-//         (repository == publishing.repositories.sonatype &&
-//             project.hasProperty('sonatypeUsername') &&
-//             project.hasProperty('sonatypePassword')) ||
-//         (repository == publishing.repositories.localRepo)
-//     }
-// }
-// tasks.withType(Sign) {
-//     onlyIf { project.hasProperty('signingKey') &&
-//         project.hasProperty('signingPassword')
-//     }
-// }
-// // disable running task 'initializeSonatypeStagingRepository' on a gitlab
-// tasks.whenTaskAdded {task ->
-//     if(task.name.equals('initializeSonatypeStagingRepository') &&
-//         !(project.hasProperty('sonatypeUsername') && project.hasProperty('sonatypePassword'))
-//     ) {
-//         task.enabled = false
-//     }
-// }
 
 publishing {
     publications {
-        jworld(MavenPublication) {
-            from components.java
+        mavenJava(MavenPublication) {
+            from(components.java)
+            pom {
+              name = rootProject.name
+              packaging = 'jar'
+              description = rootProject.description
+              url = vcs_url
+              scm {
+                url = vcs_url
+              }
+              licenses {
+                license {
+                  name = 'The Apache License, Version 2.0'
+                  url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+              }
+              developers {
+                developer {
+                  id = 'developer'
+                  name = 'developer'
+                  email = 'developer@exactpro.com'
+                }
+              }
+              scm {
+                url = vcs_url
+              }
+            }
         }
-        // mavenJava(MavenPublication) {
-        //     from(components.java)
-        //     pom {
-        //       name = rootProject.name
-        //       packaging = 'jar'
-        //       description = rootProject.description
-        //       url = vcs_url
-        //       scm {
-        //         url = vcs_url
-        //       }
-        //       licenses {
-        //         license {
-        //           name = 'The Apache License, Version 2.0'
-        //           url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-        //         }
-        //       }
-        //       developers {
-        //         developer {
-        //           id = 'developer'
-        //           name = 'developer'
-        //           email = 'developer@exactpro.com'
-        //         }
-        //       }
-        //       scm {
-        //         url = vcs_url
-        //       }
-        //     }
-        // }
     }
     repositories {
         maven {
