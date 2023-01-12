@@ -43,5 +43,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew --info clean build publish
         env:
-          ORG_GRADLE_PROJECT_uploadToken: ${{ secrets.PYPI_PUSH_TOKEN }} 
+          ORG_GRADLE_PROJECT_uploadToken: ${{ secrets.PYPI_PUSH_TOKEN }}
+  owasp-scan:
+    uses: th2-net/.github/.github/workflows/owasp-gradle-scan.yml@main
+
 

@@ -3,6 +3,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id "com.google.protobuf" version "0.8.15"
+    id "org.owasp.dependencycheck" version "7.4.4"
 }
 
 group = 'com.exactpro.th2'
@@ -154,4 +155,8 @@ publishing {
 
 clean {
     delete genDir
+}
+
+dependencyCheck {
+    formats=['SARIF']
 }
